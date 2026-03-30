@@ -1,59 +1,67 @@
-# FrontendTareasProyectos
+# Frontend - Tasks and Projects
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.0.
+This project is part of an integrative work for a subject at UNdeC, implementing Angular and the SPEC methodology.
 
-## Development server
+## 🔗 Backend Repository
 
-To start a local development server, run:
+The backend for this project is available at:
+[https://github.com/j-olivera/Final-Integrador](https://github.com/j-olivera/Final-Integrador)
 
-```bash
-ng serve
-```
+---
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## 🛠️ Technologies Used
 
-## Code scaffolding
+| Technology | Version |
+|------------|---------|
+| [Angular](https://angular.io/) | ^21.2.0 |
+| [TypeScript](https://www.typescriptlang.org/) | ~5.9.2 |
+| [RxJS](https://rxjs.dev/) | ~7.8.0 |
+| [Angular Router](https://angular.io/guide/router) | ^21.2.0 |
+| [Angular Forms](https://angular.io/guide/forms-overview) | ^21.2.0 |
+| [Vitest](https://vitest.dev/) | ^4.0.8 |
+| [Prettier](https://prettier.io/) | ^3.8.1 |
+| Node Package Manager (npm) | 11.12.1 |
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+---
 
-```bash
-ng generate component component-name
-```
+## 🚀 Installation Instructions
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### Prerequisites
 
-```bash
-ng generate --help
-```
+Make sure you have the following installed on your machine:
+- [Node.js](https://nodejs.org/) (v18 or higher recommended)
+- [npm](https://www.npmjs.com/) (v11 or higher)
+- [Angular CLI](https://angular.io/cli)
 
-## Building
+### Steps
 
-To build the project run:
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd frontend-tareas-proyectos
+   ```
 
-```bash
-ng build
-```
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+3. **Run the development server**
+   ```bash
+   npm start
+   ```
+   The application will be available at `http://localhost:4200/`.
 
-## Running unit tests
+4. **Build for production** *(optional)*
+   ```bash
+   npm run build
+   ```
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+5. **Run tests** *(optional)*
+   ```bash
+   npm test
+   ```
 
-```bash
-ng test
-```
+---
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+> **Note:** Make sure the backend server is running before starting the frontend. Refer to the [backend repository](https://github.com/j-olivera/Final-Integrador) for setup instructions.
