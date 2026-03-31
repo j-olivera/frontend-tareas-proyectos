@@ -20,39 +20,39 @@ Method: POST URL: /api/users
     "password": "[PASSWORD]"
 }
 ```
-### Respuestas esperadas
+### Expected Responses
 
-- 201 Created: Devuelve un usuario con estado PENDING
-- 400 Bad Request: Devuelve un error de validación (email, password)
-- 409 Conflict: Devuelve un error de email duplicado
+- 201 Created: Returns a user with PENDING state
+- 400 Bad Request: Returns a validation error (email, password)
+- 409 Conflict: Returns a duplicate email error
 
 
 ## 4 - Business restrictions (Frontend)
 
-- El boton de "Registrarse" debe estar deshabilitado hasta que el formulario sea valido
-- Validaciones en tiempo real:
-    - Email: debe ser un email valido y no puede estar vacío
-    - Password: debe tener al menos 6 caracteres y no puede estar vacía
-- Los mensajes de error (400 o 409) deben aparecer debajo de cada input y deben ser claros y concisos
+- The "Register" button must be disabled until the form is valid
+- Real-time validations:
+    - Email: must be a valid email format and cannot be empty
+    - Password: must be at least 6 characters long and cannot be empty
+- Error messages (400 or 409) must appear below each input and must be clear and concise
 
 
-## 5 - Lineamientos técnicos
+## 5 - Technical Guidelines
 
-- Se utiliza Reactive Forms para manejar el estado de las validaciones del formulario
-- Crear un componente Standalone en Angular
-- Inyectar un servicio como "AuthService" que utilice HttpClient para realizar la peticion POST
+- Use Reactive Forms to manage form validation state
+- Create an Angular Standalone Component
+- Inject an "AuthService" that uses HttpClient to make the POST request
 
-## 6 - Criterios de aceptación 
+## 6 - Acceptance Criteria 
 
-- Escenario 1: Registro exitoso
-    - Dado que el usuario ingreso un email valido y una contraseña valida, al hacer clic en "Registrarse" se debe enviar una peticion POST al endpoint /api/users. Mostrando un mensaje "Cuenta creada exitosamente" y redirigiendo al usuario a la pantalla de login
+- Scenario 1: Successful Registration
+    - Given that the user entered a valid email and a valid password, when clicking "Register", a POST request must be sent to the /api/users endpoint. A message "Account successfully created" should be shown and the user redirected to the orders screen.
 
-- Escenario 2: Validaciones visuales
-    - Dado que el usuario ingreso un email invalido, al quitar el foco del input, el borde del input debe cambiar a color rojo y debe aparecer un mensaje de error debajo del input
-    - Dado que el usuario ingreso una contraseña invalida, al quitar el foco del input, el borde del input debe cambiar a color rojo y debe aparecer un mensaje de error debajo del input
+- Scenario 2: Visual Validations
+    - Given that the user entered an invalid email, when removing focus from the input, the input border must turn red and an error message must appear below the input.
+    - Given that the user entered an invalid password, when removing focus from the input, the input border must turn red and an error message must appear below the input.
 
-- Escenario 3: Email duplicado (409 Conflict)
-    - Dado que el usuario envio el formulario correctamente, al llegar al backend y realizar las comprobaciones correspondientes y detectar que el email ya existe, se debe mostrar un mensaje de error "El email ya existe" y el formulario debe permanecer en la pantalla de registro
+- Scenario 3: Duplicate Email (409 Conflict)
+    - Given that the user submitted the form correctly, upon reaching the backend and validating that the email already exists, an error message "Email already exists" must be shown, and the form must remain on the registration screen.
 
 ## 7 - Prompts Utilizados
 
