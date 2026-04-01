@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 
 export interface RegisterPayload {
     email: string;
@@ -18,7 +19,7 @@ export interface RegisteredUser {
     providedIn: 'root',
 })
 export class AuthService {
-    private readonly BASE_URL = 'http://localhost:8080';
+    private readonly BASE_URL = environment.apiUrl;
 
     constructor(private http: HttpClient) { }
 
