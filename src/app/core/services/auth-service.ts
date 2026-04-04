@@ -9,6 +9,16 @@ export interface RegisterPayload { // datos cargados por el usuario
     password: string;
 }
 
+export interface LoginPayload { // datos para login
+    email: string;
+    password: string;
+}
+
+export interface LoginResponse { // respuesta del backend en login
+    token: string;
+    type: string;
+}
+
 // son contratos que definen la forma que deben tener los datos que entran y salen
 
 export interface RegisteredUser { // datos devueltos por el sistema, id, email, estado y fecha de expiracion (+ 7 dias desde la fecha de creación)
@@ -29,9 +39,15 @@ export class AuthService {
     //                recibe                       retorna
     register(payload: RegisterPayload): Observable<RegisteredUser> { // un Observable es un "tubo" por donde viaja la informacion
         return this.http // hace la peticion http
-            .post<RegisteredUser>(`${this.BASE_URL}/api/users`, payload) // envia los datos al backend
+            .post<RegisteredUser>(`${this.BASE_URL}/users`, payload) // envia los datos al backend
             .pipe(catchError(this.handleError)); // maneja los errores
     }       //.pipe() intercepta la informacion que sale del "tubo"
+
+    login(payload: LoginPayload): Observable<LoginResponse> {
+        return this.http
+            .post<LoginResponse>(`${this.BASE_URL}/login`, payload)
+            .pipe(catchError(this.handleError));
+    }
 
     private handleError(error: HttpErrorResponse): Observable<never> {
         // Re-lanza el error tal cual para que el componente lo maneje

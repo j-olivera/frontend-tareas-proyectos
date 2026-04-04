@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../../core/services/auth-service';
 
 @Component({
   selector: 'app-register',
   standalone: true, // Standalone -> true indica que el COMPONENTE ES 100% INDEPENDIENTE
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './user-register.html',
   styleUrls: ['./user-register.css'],
 })
@@ -84,9 +84,9 @@ export class UserRegister implements OnInit {
     this.authService.register({ email, password }).subscribe({ // suscribre sirve para no congelar la pantalla
       next: () => {
         this.isLoading = false;
-        this.successMessage = 'Cuenta creada exitosamente.';
-        // Redirige a la pantalla de órdenes luego de 1.5 s para que el usuario vea el mensaje
-        setTimeout(() => this.router.navigate(['/orders']), 1500); // si todo sale bien nos vamos a orders (esta no es la ruta final)
+        this.successMessage = 'Cuenta creada. Iniciá sesión.';
+        // Redirige a login para obtener el JWT (el backend no devuelve token en register)
+        setTimeout(() => this.router.navigate(['/login']), 2000);
       },
       error: (err: HttpErrorResponse) => {
         this.isLoading = false;

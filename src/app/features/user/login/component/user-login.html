@@ -1,0 +1,58 @@
+<!-- login.component.html -->
+<div class="page">
+    <div class="card">
+
+        <!-- Header -->
+        <div class="card__header">
+            <span class="card__logo">⬡</span>
+            <h1 class="card__title">Iniciar sesión</h1>
+            <p class="card__subtitle">Tasks &amp; Projects — welcome back</p>
+        </div>
+
+        <!-- Mensaje de éxito -->
+        <div *ngIf="successMessage" class="alert alert--success" role="alert">
+            ✓ {{ successMessage }}
+        </div>
+
+        <!-- Error genérico (credenciales inválidas) -->
+        <div *ngIf="genericError" class="alert alert--error" role="alert">
+            ✕ {{ genericError }}
+        </div>
+
+        <!-- Formulario -->
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate class="form" *ngIf="!successMessage">
+
+            <!-- Email -->
+            <div class="field" [class.field--error]="isFieldInvalid(email)">
+                <label class="field__label" for="email">Email</label>
+                <input id="email" type="email" class="field__input" formControlName="email"
+                    placeholder="nombre@ejemplo.com" autocomplete="email" />
+                <span class="field__error" *ngIf="isFieldInvalid(email)">
+                    {{ emailError }}
+                </span>
+            </div>
+
+            <!-- Password -->
+            <div class="field" [class.field--error]="isFieldInvalid(password)">
+                <label class="field__label" for="password">Contraseña</label>
+                <input id="password" type="password" class="field__input" formControlName="password"
+                    placeholder="Mínimo 8 caracteres" autocomplete="current-password" />
+                <span class="field__error" *ngIf="isFieldInvalid(password)">
+                    {{ passwordError }}
+                </span>
+            </div>
+
+            <!-- Submit -->
+            <button type="submit" class="btn-submit" [disabled]="loginForm.invalid || isLoading"
+                [class.btn-submit--loading]="isLoading">
+                <span class="btn-submit__spinner" *ngIf="isLoading"></span>
+                <span>{{ isLoading ? 'Iniciando sesión...' : 'Iniciar sesión' }}</span>
+            </button>
+
+        </form>
+
+        <p class="card__footer">
+            ¿No tenés cuenta? <a routerLink="/register">Crear cuenta</a>
+        </p>
+    </div>
+</div>

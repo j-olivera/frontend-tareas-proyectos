@@ -1,0 +1,214 @@
+/* login.component.css */
+
+/* ─── Tokens ─────────────────────────────────────────────── */
+:root {
+    --color-bg: #0f1117;
+    --color-surface: #1a1d27;
+    --color-border: #2d3145;
+    --color-border-focus: #5b6af0;
+    --color-border-error: #e05c5c;
+    --color-accent: #5b6af0;
+    --color-accent-hover: #4a59e0;
+    --color-text: #e8eaf6;
+    --color-text-muted: #7c82a8;
+    --color-success-bg: #0d2b1e;
+    --color-success-text: #4caf82;
+    --color-error-bg: #2b0d0d;
+    --color-error: #e05c5c;
+    --radius: 10px;
+    --transition: 180ms ease;
+}
+
+/* ─── Layout ─────────────────────────────────────────────── */
+.page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-bg);
+    padding: 24px;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+/* ─── Card ───────────────────────────────────────────────── */
+.card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    padding: 40px 36px;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.card__header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.card__logo {
+    font-size: 2rem;
+    color: var(--color-accent);
+    display: block;
+    margin-bottom: 12px;
+}
+
+.card__title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin: 0 0 6px;
+    letter-spacing: -0.02em;
+}
+
+.card__subtitle {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin: 0;
+}
+
+.card__footer {
+    text-align: center;
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+    margin: 20px 0 0;
+}
+
+.card__footer a {
+    color: var(--color-accent);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.card__footer a:hover {
+    text-decoration: underline;
+}
+
+/* ─── Alert ──────────────────────────────────────────────── */
+.alert {
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 16px;
+}
+
+.alert--success {
+    background: var(--color-success-bg);
+    color: var(--color-success-text);
+    border: 1px solid rgba(76, 175, 130, 0.25);
+}
+
+.alert--error {
+    background: var(--color-error-bg);
+    color: var(--color-error);
+    border: 1px solid rgba(224, 92, 92, 0.25);
+}
+
+/* ─── Form ───────────────────────────────────────────────── */
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* ─── Field ──────────────────────────────────────────────── */
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.field__label {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.field__input {
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    color: var(--color-text);
+    font-size: 0.9375rem;
+    padding: 11px 14px;
+    outline: none;
+    transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.field__input::placeholder {
+    color: var(--color-text-muted);
+    opacity: 0.6;
+}
+
+.field__input:focus {
+    border-color: var(--color-border-focus);
+    box-shadow: 0 0 0 3px rgba(91, 106, 240, 0.18);
+}
+
+/* Estado de error */
+.field--error .field__input {
+    border-color: var(--color-border-error);
+}
+
+.field--error .field__input:focus {
+    box-shadow: 0 0 0 3px rgba(224, 92, 92, 0.18);
+}
+
+.field__error {
+    font-size: 0.8rem;
+    color: var(--color-error);
+    min-height: 1rem;
+}
+
+/* ─── Submit button ──────────────────────────────────────── */
+.btn-submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--color-accent);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    padding: 13px;
+    cursor: pointer;
+    transition: background var(--transition), opacity var(--transition), transform var(--transition);
+    margin-top: 4px;
+    letter-spacing: 0.01em;
+}
+
+.btn-submit:hover:not(:disabled) {
+    background: var(--color-accent-hover);
+    transform: translateY(-1px);
+}
+
+.btn-submit:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.btn-submit:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+/* Spinner */
+.btn-submit__spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    flex-shrink: 0;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
