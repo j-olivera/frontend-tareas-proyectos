@@ -7,7 +7,7 @@ import { AuthService } from '../../../../core/services/auth-service';
 
 @Component({
   selector: 'app-register',
-  standalone: true,
+  standalone: true, // Standalone -> true indica que el COMPONENTE ES 100% INDEPENDIENTE
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './user-register.html',
   styleUrls: ['./user-register.css'],
@@ -19,9 +19,9 @@ export class UserRegister implements OnInit {
   serverErrors: { email?: string; password?: string } = {};
 
   constructor(
-    private fb: FormBuilder,
-    private authService: AuthService,
-    private router: Router
+    private fb: FormBuilder, // sirve para armar formularios complejos con menos codigo
+    private authService: AuthService, // delega la comunicación con el backend
+    private router: Router // sirve para cambiar de pantalla sin recargar la pagina web
   ) { }
 
   ngOnInit(): void {
@@ -55,7 +55,7 @@ export class UserRegister implements OnInit {
     if (this.email.hasError('email')) return 'Ingresá un email válido.';
     return '';
   }
-
+  // funciones para ver que tipo de error hay en el formulario
   get passwordError(): string {
     if (this.serverErrors.password) return this.serverErrors.password;
     if (this.password.hasError('required')) return 'La contraseña es obligatoria.';
@@ -73,20 +73,20 @@ export class UserRegister implements OnInit {
 
   onSubmit(): void {
     // Doble guarda: si el formulario es inválido no hace nada (el botón debería estar deshabilitado)
-    if (this.registerForm.invalid) return;
+    if (this.registerForm.invalid) return; //Si un usuario malicioso quita el atributo disabled del botón desde el navegador, esta línea evita que se envíe basura al servidor.
 
-    this.isLoading = true;
+    this.isLoading = true; // para no hacer doble click en el boton y q muestre el spinner de carga
     this.successMessage = '';
     this.serverErrors = {};
 
     const { email, password } = this.registerForm.value;
 
-    this.authService.register({ email, password }).subscribe({
+    this.authService.register({ email, password }).subscribe({ // suscribre sirve para no congelar la pantalla
       next: () => {
         this.isLoading = false;
         this.successMessage = 'Cuenta creada exitosamente.';
         // Redirige a la pantalla de órdenes luego de 1.5 s para que el usuario vea el mensaje
-        setTimeout(() => this.router.navigate(['/orders']), 1500);
+        setTimeout(() => this.router.navigate(['/orders']), 1500); // si todo sale bien nos vamos a orders (esta no es la ruta final)
       },
       error: (err: HttpErrorResponse) => {
         this.isLoading = false;
@@ -100,7 +100,7 @@ export class UserRegister implements OnInit {
           const body = err.error;
           if (body?.email) this.serverErrors.email = body.email;
           if (body?.password) this.serverErrors.password = body.password;
-          this.email.markAsTouched();
+          this.email.markAsTouched(); // muestra los erroes solo si los campos fueron "tocados" osea si el usuario interactuo con ellos
           this.password.markAsTouched();
         }
       },

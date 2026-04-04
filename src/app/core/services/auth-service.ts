@@ -4,30 +4,34 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 
-export interface RegisterPayload {
+export interface RegisterPayload { // datos cargados por el usuario
     email: string;
     password: string;
 }
 
-export interface RegisteredUser {
+// son contratos que definen la forma que deben tener los datos que entran y salen
+
+export interface RegisteredUser { // datos devueltos por el sistema, id, email, estado y fecha de expiracion (+ 7 dias desde la fecha de creación)
     id: number;
     email: string;
     state: 'PENDING';
+    expirationDate: Date;
 }
 
 @Injectable({
-    providedIn: 'root',
+    providedIn: 'root', // es una instancia global, sirve para no perder la informacion, no se duplique ni se reinicie
 })
+
 export class AuthService {
     private readonly BASE_URL = environment.apiUrl;
 
     constructor(private http: HttpClient) { }
-
-    register(payload: RegisterPayload): Observable<RegisteredUser> {
-        return this.http
-            .post<RegisteredUser>(`${this.BASE_URL}/api/users`, payload)
-            .pipe(catchError(this.handleError));
-    }
+    //                recibe                       retorna
+    register(payload: RegisterPayload): Observable<RegisteredUser> { // un Observable es un "tubo" por donde viaja la informacion
+        return this.http // hace la peticion http
+            .post<RegisteredUser>(`${this.BASE_URL}/api/users`, payload) // envia los datos al backend
+            .pipe(catchError(this.handleError)); // maneja los errores
+    }       //.pipe() intercepta la informacion que sale del "tubo"
 
     private handleError(error: HttpErrorResponse): Observable<never> {
         // Re-lanza el error tal cual para que el componente lo maneje
@@ -36,3 +40,14 @@ export class AuthService {
 }
 
 // el auth-service responde a la pregunta ¿quien sos?
+// tambien nos sirve para respetar el Single Responsibility Principle (SRP) y en caso de agrandar el proyecto, la reutilazcion de codigo
+
+/*
+
+@Injectable({
+    providedIn: 'root', // es una instancia global, sirve para no perder la informacion, no se duplique ni se reinicie
+})
+    esto sirve para que los demas componentes a la hora de manejar las credenciales correspodientes no tengan que crear una instancia de AuthService, sino
+    que se dirijan aca y la reutilicen
+    Sin eso se generaría una instancia de authservice por componente, lo cual seria un desperdicio de memoria y recursos
+*/
