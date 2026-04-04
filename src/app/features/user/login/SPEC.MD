@@ -1,51 +1,51 @@
-# Spec Drive Develoment
+# Spec Driven Development
 
-## 1 - Nombre de la feature
+## 1 - Feature Name
 
 user-login-screen
 
-## 2 - Descripcion
+## 2 - Description
 
-Interface (formulario) para que los usuarios REGISTRADOS se logeen, obteniendo su token de acceso y 
-siendo redirigido a sus ordenes
+Interface (form) for REGISTERED users to log in, obtaining their access token and 
+being redirected to their orders
 
 ## 3 - Endpoints
 
-METODO: POST | URL: /api/login
+METHOD: POST | URL: /api/login
 BODY: { "email": "..", "password": ".." }
 
-Respuestas esperadas 
-    200 Ok: { "token": "...", "type": "Bearer" }
-    401 Unauthorized: { "message": "Credenciales invalidas" }
-    404 Not Found: { "message": "Usuario no encontrado"}
+Expected responses:
+- 200 Ok: { "token": "...", "type": "Bearer" }
+- 401 Unauthorized: { "message": "Invalid credentials" }
+- 404 Not Found: { "message": "User not found"}
 
-## 4 - Restricciones del negocio (FrontEnd)
+## 4 - Business Constraints (FrontEnd)
 
-- El boton de "Ingresar" esta deshabilitado hasta que el formato del correo sea correcto y la contraseña tenga al menos 8 caracteres
-- Al recibir el token el frontend debe almacenarlo en el localStorage
-- Los errores de credenciales deben mostrarse con un msj generico, que no exponga si es el usuario o la contraseña
+- The "Login" button is disabled until the email format is valid and the password has at least 8 characters
+- Upon receiving the token, the frontend must store it in localStorage
+- Credential errors must be shown with a generic message that does not reveal whether it's the user or the password that is wrong
 
-## 5 - Lineamientos tecnicos
+## 5 - Technical Guidelines
 
-- Usar Reactive Forms para para las validaciones del formulario
-- El componente debe ser standalone
-- Agregar el metodo login() al auth-service para hacer la peticion al backend
+- Use Reactive Forms for form validations
+- The component must be standalone
+- Add the login() method to auth-service to make the request to the backend
 
-## 6 - Criterios de aceptacion
+## 6 - Acceptance Criteria
 
-- Escenario 1 - Login exitoso
-    - Dado que el usuario esta registrado e ingreso sus credenciales correctamente
-    el backend devuelve su jwt, muestra un mensaje de bienvenida y redirige al usuario a /orders
+- Scenario 1 - Successful login
+    - Given that the user is registered and entered their credentials correctly
+    the backend returns their jwt, shows a welcome message and redirects the user to /orders
 
-- Escenario 2 - Credenciales invalidas
-    - Dado que el usuario no esta registrado o ingreso sus credenciales incorrectamente
-    el backend devuelve un error 401 Unauthorized, muestra un mensaje de error generico y no redirige al usuario, los datos ingresados en el formulario NO son borrados.
+- Scenario 2 - Invalid credentials
+    - Given that the user is not registered or entered their credentials incorrectly
+    the backend returns a 401 Unauthorized error, shows a generic error message and does not redirect the user, the data entered in the form is NOT cleared.
 
-- Escenario 3 - Formulario invalido
-    - Dado que el usuario ingreso un formato de correo invalido o una contraseña menor a 8 caracteres
-    el boton de "Ingresar" esta deshabilitado y se muestra un mensaje de error debajo del campo correspondiente
+- Scenario 3 - Invalid form
+    - Given that the user entered an invalid email format or a password shorter than 8 characters
+    the "Login" button is disabled and an error message is shown below the corresponding field
 
 
-## 7 - Prompt utilizado
+## 7 - Prompt Used
 
-- Siguiendo el contexto del proyecto y entendiendo el siguiente Caso de Uso [url] genera un componente siguiendo las indicaciones en el [SPEC.MD], sin utilizar librerías externas, siguiendo la arquitectura del proyecto, dame los archivos .ts .html y .css correspondientes y las modifcaciones realizadas en el auth-service.ts
+- Following the project context and understanding the following Use Case [url] generate a component following the indications in the [SPEC.MD], without using external libraries, following the project architecture, provide the corresponding .ts .html and .css files and the modifications made in the auth-service.ts
