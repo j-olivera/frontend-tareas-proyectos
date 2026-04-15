@@ -4,6 +4,7 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractContro
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../../core/services/auth-service';
+import { HandleError } from '../../../../core/model/h-error/handle-error';
 
 @Component({
   selector: 'app-login',
@@ -81,16 +82,33 @@ export class UserLogin implements OnInit {
         // Redirige a orders luego de 1.5s para que vea el mensaje
         setTimeout(() => this.router.navigate(['/orders']), 1500);
       },
-      error: (err: HttpErrorResponse) => {
+      error: (err: HandleError) => {
         this.isLoading = false;
 
-        if (err.status === 401 || err.status === 404) {
-          // Error genérico: no revela si es usuario o contraseña
-          this.genericError = 'Credenciales inválidas. Verificá tu email y contraseña.';
-        } else {
-          // Error inesperado
-          this.genericError = 'Ocurrió un error. Intentalo más tarde.';
+        //se cambia de logica tecnica a logica de negocio
+
+        switch (err.code) {
+          case 'UNAUTHORIZED':
+            this.genericError = 'Credenciales inválidas. Verificá tu email y contraseña.';
+            break;
+          case 'NOT_FOUND':
+            this.genericError = 'Credenciales inválidas. Verificá tu email y contraseña.';
+            break;
+          case 'VALIDATION_ERROR':
+            if (err.details?.email) {
+              this.genericError = err.details.email;
+            } else if (err.details?.password) {
+              this.genericError = err.details.password;
+            }
+            break;
+          case 'EMAIL_TAKEN':
+            this.genericError = 'El email esta en uso, prueba con otro';
+            break;
+          case 'UNKNOWN_ERROR':
+            this.genericError = 'Ocurrió un error. Intentalo más tarde.';
+            break;
         }
+
       },
     });
   }

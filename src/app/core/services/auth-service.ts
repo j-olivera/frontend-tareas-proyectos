@@ -3,6 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
+import { HandleError } from '../model/h-error/handle-error';
 
 export interface RegisterPayload { // datos cargados por el usuario
     email: string;
@@ -50,20 +51,30 @@ export class AuthService {
     }
 
     private handleError(error: HttpErrorResponse): Observable<never> {
-        // Re-lanza el error tal cual para que el componente lo maneje
-        return throwError(() => error);
+        let appError: HandleError = { code: 'UNKNOWN_ERROR' };
+
+        if (error.status == 409) {
+            appError.code = 'EMAIL_TAKEN';
+
+        } else if (error.status == 400) {
+            appError.code = 'VALIDATION_ERROR';
+            appError.details = error.error;
+        } else if (error.status == 500) {
+            appError.code = 'SERVER_DOWN';
+
+        } else if (error.status == 401) {
+            appError.code = 'UNAUTHORIZED';
+
+        } else if (error.status == 404) {
+            appError.code = 'NOT_FOUND';
+
+        } else {
+            appError.code = 'UNKNOWN_ERROR';
+        }
+
+        return throwError(() => appError);
     }
 }
 
 // el auth-service responde a la pregunta ¿quien sos?
 // tambien nos sirve para respetar el Single Responsibility Principle (SRP) y en caso de agrandar el proyecto, la reutilazcion de codigo
-
-/*
-
-@Injectable({
-    providedIn: 'root', // es una instancia global, sirve para no perder la informacion, no se duplique ni se reinicie
-})
-    esto sirve para que los demas componentes a la hora de manejar las credenciales correspodientes no tengan que crear una instancia de AuthService, sino
-    que se dirijan aca y la reutilicen
-    Sin eso se generaría una instancia de authservice por componente, lo cual seria un desperdicio de memoria y recursos
-*/

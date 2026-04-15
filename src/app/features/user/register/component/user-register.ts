@@ -4,6 +4,7 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractContro
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../../core/services/auth-service';
+import { HandleError } from '../../../../core/model/h-error/handle-error';
 
 @Component({
   selector: 'app-register',
@@ -88,20 +89,23 @@ export class UserRegister implements OnInit {
         // Redirige a login para obtener el JWT (el backend no devuelve token en register)
         setTimeout(() => this.router.navigate(['/login']), 2000);
       },
-      error: (err: HttpErrorResponse) => {
+      error: (err: HandleError) => {
         this.isLoading = false;
 
-        if (err.status === 409) {
-          // El email ya existe en el sistema
-          this.serverErrors.email = 'El email ya está registrado.';
-          this.email.markAsTouched();
-        } else if (err.status === 400) {
-          // Errores de validación que devuelve el backend
-          const body = err.error;
-          if (body?.email) this.serverErrors.email = body.email;
-          if (body?.password) this.serverErrors.password = body.password;
-          this.email.markAsTouched(); // muestra los erroes solo si los campos fueron "tocados" osea si el usuario interactuo con ellos
-          this.password.markAsTouched();
+        switch (err.code) {
+          case 'EMAIL_TAKEN':
+            this.serverErrors.email = 'El email ya está registrado.';
+            this.email.markAsTouched();
+            break;
+          case 'VALIDATION_ERROR':
+            if (err.details?.email) {
+              this.serverErrors.email = err.details.email;
+            } else if (err.details?.password) {
+              this.serverErrors.password = err.details.password;
+            }
+            this.email.markAsTouched();
+            this.password.markAsTouched();
+            break;
         }
       },
     });

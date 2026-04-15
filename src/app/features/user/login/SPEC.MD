@@ -12,12 +12,35 @@ being redirected to their orders
 ## 3 - Endpoints
 
 METHOD: POST | URL: /api/login
-BODY: { "email": "..", "password": ".." }
+
+BODY:
+```json
+{
+    "email": "usuario@gmail.com",
+    "password": "123456789"
+}
+```
 
 Expected responses:
-- 200 Ok: { "token": "...", "type": "Bearer" }
-- 401 Unauthorized: { "message": "Invalid credentials" }
-- 404 Not Found: { "message": "User not found"}
+- 200 Ok: 
+```json
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OTQyY2E5YjQ1ZDY0YjE5YjQ0YjE5YjIiLCJlbWFpbCI6InVzdWFyaW9AZ21haWwuY29tIiwiaWF0IjoxNzQ0NTQ3MjM1LCJleHAiOjE3NDQ1NDc4MzV9.81g0871111111111111111111111111111111111111111111111111111111111",
+    "type": "Bearer"
+}
+```
+- 401 Unauthorized: 
+```json
+{
+    "message": "Invalid credentials"
+}
+```
+- 404 Not Found: 
+```json
+{
+    "message": "User not found"
+}
+```
 
 ## 4 - Business Constraints (FrontEnd)
 
@@ -49,3 +72,7 @@ Expected responses:
 ## 7 - Prompt Used
 
 - Following the project context and understanding the following Use Case [url] generate a component following the indications in the [SPEC.MD], without using external libraries, following the project architecture, provide the corresponding .ts .html and .css files and the modifications made in the auth-service.ts
+
+## Agregados
+
+- Se agrego abstacción de errores en auth-service.ts, segun la devolucion del anterior PR
