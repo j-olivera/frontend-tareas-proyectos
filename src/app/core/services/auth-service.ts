@@ -34,20 +34,10 @@ export class AuthService {
     }       //.pipe() intercepta la informacion que sale del "tubo"
 
     private handleError(error: HttpErrorResponse): Observable<never> {
-        // Re-lanza el error tal cual para que el componente lo maneje
+        //se cambiara esto en la sig feature
         return throwError(() => error);
     }
 }
 
 // el auth-service responde a la pregunta ¿quien sos?
 // tambien nos sirve para respetar el Single Responsibility Principle (SRP) y en caso de agrandar el proyecto, la reutilazcion de codigo
-
-/*
-
-@Injectable({
-    providedIn: 'root', // es una instancia global, sirve para no perder la informacion, no se duplique ni se reinicie
-})
-    esto sirve para que los demas componentes a la hora de manejar las credenciales correspodientes no tengan que crear una instancia de AuthService, sino
-    que se dirijan aca y la reutilicen
-    Sin eso se generaría una instancia de authservice por componente, lo cual seria un desperdicio de memoria y recursos
-*/

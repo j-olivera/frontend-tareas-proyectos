@@ -86,7 +86,7 @@ export class UserRegister implements OnInit {
         this.isLoading = false;
         this.successMessage = 'Cuenta creada exitosamente.';
         // Redirige a la pantalla de órdenes luego de 1.5 s para que el usuario vea el mensaje
-        setTimeout(() => this.router.navigate(['/orders']), 1500); // si todo sale bien nos vamos a orders (esta no es la ruta final)
+        setTimeout(() => this.router.navigate(['/login']), 1500); // cambio de flujo, se ve en la siguiente feature
       },
       error: (err: HttpErrorResponse) => {
         this.isLoading = false;
