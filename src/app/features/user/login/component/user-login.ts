@@ -91,9 +91,6 @@ export class UserLogin implements OnInit {
           case 'UNAUTHORIZED':
             this.genericError = 'Credenciales inválidas. Verificá tu email y contraseña.';
             break;
-          case 'NOT_FOUND':
-            this.genericError = 'Credenciales inválidas. Verificá tu email y contraseña.';
-            break;
           case 'VALIDATION_ERROR':
             if (err.details?.email) {
               this.genericError = err.details.email;

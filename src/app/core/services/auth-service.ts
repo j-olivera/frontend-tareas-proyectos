@@ -66,7 +66,7 @@ export class AuthService {
             appError.code = 'UNAUTHORIZED';
 
         } else if (error.status == 404) {
-            appError.code = 'NOT_FOUND';
+            appError.code = 'NOT_FOUND'; // no se usa en el proyecto
 
         } else {
             appError.code = 'UNKNOWN_ERROR';
