@@ -67,3 +67,8 @@
 - Te paso la especificacion de la feature en formato md: [SPEC.MD]
 - Resticciones: Usa Standalone components, Reactive Forms y CSS puro, tambien Bootstrap 5
 - Opera en modo interactivo, explicacion, codigo, validacion y correccion si es necesario.
+
+### Agregados
+- Genera un objeto Toast cuando el usuario genere una orden, colocalo en la parte superior derecha de la pantalla, usa los iconos de fontAwesome para representar los estados (Success -> Check, Error -> Close), asi manejamos mejor los mensajes de succes y error
+- Muestra el email del usuario en la parte superior izquierda de la pantalla, los datos se obtienen del localStorage, con un formato parecido a un boton y un icono de persona, modifica el user-login.ts para que tambien guarde el email en el localStorage
+- Agrega un texto "Ver tus ordenes" abajo del form, el cual redirija a /view-orders, usando routerLink

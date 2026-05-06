@@ -1,5 +1,23 @@
 <!-- order-create.component.html -->
 <div class="page">
+  
+  <!-- Header con Email del Usuario -->
+  <div class="user-header">
+    <button class="btn-user">
+      <i class="fas fa-user-circle"></i>
+      <span>{{ userEmail }}</span>
+    </button>
+  </div>
+
+  <!-- Contenedor de Toasts -->
+  <div class="toast-container" *ngIf="toast.show" [class.toast--error]="toast.type === 'error'">
+    <div class="toast-content">
+      <i class="fas" [ngClass]="toast.type === 'success' ? 'fa-check-circle' : 'fa-times-circle'"></i>
+      <span>{{ toast.message }}</span>
+    </div>
+    <div class="toast-progress"></div>
+  </div>
+
   <div class="card">
     <!-- Header -->
     <div class="card__header">
@@ -8,18 +26,8 @@
       <p class="card__subtitle">Tasks &amp; Projects — Registrar pedido</p>
     </div>
 
-    <!-- Mensaje de éxito -->
-    <div *ngIf="successMessage" class="alert alert--success" role="alert">
-      ✓ {{ successMessage }}
-    </div>
-
-    <!-- Error genérico -->
-    <div *ngIf="errorMessage" class="alert alert--error" role="alert">
-      ✕ {{ errorMessage }}
-    </div>
-
     <!-- Formulario -->
-    <form [formGroup]="orderForm" (ngSubmit)="onSubmit()" novalidate class="form" *ngIf="!successMessage">
+    <form [formGroup]="orderForm" (ngSubmit)="onSubmit()" novalidate class="form">
       
       <!-- Amount -->
       <div class="field" [class.field--error]="isFieldInvalid('amount')">
@@ -42,6 +50,14 @@
       <button type="submit" class="btn-submit" [disabled]="orderForm.invalid">
         <span>Crear Orden</span>
       </button>
+
+      <!-- Enlace a listado -->
+      <div class="card__footer">
+        <a routerLink="/view-orders" class="link-orders">
+          Ver tus ordenes
+          <i class="fas fa-chevron-right"></i>
+        </a>
+      </div>
 
     </form>
   </div>

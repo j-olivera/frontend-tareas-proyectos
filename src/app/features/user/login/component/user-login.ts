@@ -76,8 +76,9 @@ export class UserLogin implements OnInit {
     this.authService.login({ email, password }).subscribe({
       next: (response) => {
         this.isLoading = false;
-        // Guardar token en localStorage
+        // Guardar token y email en localStorage
         localStorage.setItem('authToken', response.token);
+        localStorage.setItem('userEmail', email);
         this.successMessage = '¡Bienvenido de nuevo!';
         // Redirige a orders luego de 1.5s para que vea el mensaje
         setTimeout(() => this.router.navigate(['/orders']), 1500);

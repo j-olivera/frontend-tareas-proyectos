@@ -15,8 +15,14 @@ import { Router, RouterModule } from '@angular/router';
 export class OrderCreateComponent implements OnInit {
   router = inject(Router);
   orderForm!: FormGroup;
-  successMessage: string = '';
-  errorMessage: string = '';
+  userEmail: string = '';
+
+  // Toast state
+  toast = {
+    show: false,
+    message: '',
+    type: 'success' as 'success' | 'error'
+  };
 
   constructor(
     private fb: FormBuilder,
@@ -25,6 +31,7 @@ export class OrderCreateComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.userEmail = localStorage.getItem('userEmail') || 'usuario@ejemplo.com'; // lo pongo por las dudas, despues agrego el auth-guard y este componente solo debería poder ser accedido por usuarios autenticados
     this.orderForm = this.fb.group({
       amount: ['', [Validators.required, Validators.min(0.01), Validators.pattern('^[0-9]+(\\.[0-9]{1,2})?$')]]
     });
@@ -39,28 +46,34 @@ export class OrderCreateComponent implements OnInit {
     return !!(control && control.invalid && (control.dirty || control.touched));
   }
 
+  showToast(message: string, type: 'success' | 'error'): void {
+    this.toast = { show: true, message, type };
+    this.cdr.detectChanges();
+    setTimeout(() => {
+      this.toast.show = false;
+      this.cdr.detectChanges();
+    }, 4000);
+  }
+
   onSubmit(): void {
     if (this.orderForm.valid) {
       const amount = this.orderForm.value.amount;
       this.orderService.createOrder(amount).subscribe({
         next: () => {
-          this.successMessage = 'Order successfully created';
-          this.errorMessage = '';
-          this.cdr.detectChanges();
+          this.showToast('¡Orden creada con éxito!', 'success');
+          this.orderForm.reset();
           setTimeout(() => {
-            this.router.navigate(['/order']); // actualizado, fuera de lo planteado en la spec
+            this.router.navigate(['/order-create']); // se actualiza
           }, 2000);
         },
         error: (error: HandleError) => {
-          this.successMessage = '';
+          let msg = 'Ocurrió un error inesperado';
           if (error.code === 'VALIDATION_ERROR') {
-            this.errorMessage = 'User is not active';
+            msg = 'El usuario no está activo';
           } else if (error.code === 'UNAUTHORIZED') {
-            this.errorMessage = 'User is not logged in';
-          } else {
-            this.errorMessage = 'An unexpected error occurred';
+            msg = 'No tenés sesión iniciada';
           }
-          this.cdr.detectChanges();
+          this.showToast(msg, 'error');
         }
       });
     }

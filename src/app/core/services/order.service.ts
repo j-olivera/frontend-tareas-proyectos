@@ -11,7 +11,7 @@ import { HandleError } from '../model/h-error/handle-error';
 export class Order {
   private readonly BASE_URL = environment.apiUrl;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   createOrder(amount: number): Observable<any> {
     return this.http
