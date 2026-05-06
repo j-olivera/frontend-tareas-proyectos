@@ -1,0 +1,48 @@
+<!-- order-create.component.html -->
+<div class="page">
+  <div class="card">
+    <!-- Header -->
+    <div class="card__header">
+      <span class="card__logo">📦</span>
+      <h1 class="card__title">Nueva Orden</h1>
+      <p class="card__subtitle">Tasks &amp; Projects — Registrar pedido</p>
+    </div>
+
+    <!-- Mensaje de éxito -->
+    <div *ngIf="successMessage" class="alert alert--success" role="alert">
+      ✓ {{ successMessage }}
+    </div>
+
+    <!-- Error genérico -->
+    <div *ngIf="errorMessage" class="alert alert--error" role="alert">
+      ✕ {{ errorMessage }}
+    </div>
+
+    <!-- Formulario -->
+    <form [formGroup]="orderForm" (ngSubmit)="onSubmit()" novalidate class="form" *ngIf="!successMessage">
+      
+      <!-- Amount -->
+      <div class="field" [class.field--error]="isFieldInvalid('amount')">
+        <label class="field__label" for="amount">Monto</label>
+        <input 
+          id="amount" 
+          type="number" 
+          class="field__input" 
+          formControlName="amount"
+          placeholder="Ej: 453.23" 
+        />
+        <span class="field__error" *ngIf="isFieldInvalid('amount')">
+          <span *ngIf="amountControl?.errors?.['required']">El monto es requerido.</span>
+          <span *ngIf="amountControl?.errors?.['min']">El monto debe ser mayor a 0.</span>
+          <span *ngIf="amountControl?.errors?.['pattern']">Ingrese un monto válido.</span>
+        </span>
+      </div>
+
+      <!-- Submit -->
+      <button type="submit" class="btn-submit" [disabled]="orderForm.invalid">
+        <span>Crear Orden</span>
+      </button>
+
+    </form>
+  </div>
+</div>

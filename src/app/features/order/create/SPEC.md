@@ -48,6 +48,7 @@
 - Inject HttpService in the service.
 - Use Reactive Forms to manage form validation state.
 - Create an Angular Standalone Component, this component implements the method createOrder() defined in the service.
+- The style of component must be clean and modern, based in the login or register components, use Bootstrap 5.
 
 ## 6 - Acceptance Criteria 
 
