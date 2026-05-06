@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router';
-import { AuthService } from '../../../../core/services/auth-service';
+import { AuthService } from '../../../../core/services/auth/auth-service';
 import { HandleError } from '../../../../core/model/h-error/handle-error';
 
 @Component({
