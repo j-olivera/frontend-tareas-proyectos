@@ -5,6 +5,18 @@ import { catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { HandleError } from '../model/h-error/handle-error';
 
+export interface OrderRequest {
+  amount: number;
+}
+
+export interface OrderResponse {
+  id: number;
+  userEmail: string;
+  amount: number;
+  orderStatus: 'PENDING' | 'PROCESSING' | 'APPROVED' | 'CANCELLED';
+  createdAt: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -13,9 +25,9 @@ export class Order {
 
   constructor(private http: HttpClient) { }
 
-  createOrder(amount: number): Observable<any> {
+  createOrder(payload: OrderRequest): Observable<OrderResponse> {
     return this.http
-      .post(`${this.BASE_URL}/orders`, { amount })
+      .post<OrderResponse>(`${this.BASE_URL}/orders`, payload)
       .pipe(catchError(this.handleError));
   }
 

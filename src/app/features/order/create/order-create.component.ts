@@ -58,7 +58,7 @@ export class OrderCreateComponent implements OnInit {
   onSubmit(): void {
     if (this.orderForm.valid) {
       const amount = this.orderForm.value.amount;
-      this.orderService.createOrder(amount).subscribe({
+      this.orderService.createOrder({ amount }).subscribe({
         next: () => {
           this.showToast('¡Orden creada con éxito!', 'success');
           this.orderForm.reset();
