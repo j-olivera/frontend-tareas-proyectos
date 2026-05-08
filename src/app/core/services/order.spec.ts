@@ -2,22 +2,22 @@ import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting, HttpTestingController } from '@angular/common/http/testing';
-import { Order } from './order.service';
+import { OrderService, OrderResponse } from './order.service';
 import { of } from 'rxjs';
 
 describe('Order', () => {
-  let service: Order;
+  let service: OrderService;
   let httpMock: HttpTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        Order,
+        OrderService,
         provideHttpClient(),
         provideHttpClientTesting(),
       ]
     });
-    service = TestBed.inject(Order);
+    service = TestBed.inject(OrderService);
     httpMock = TestBed.inject(HttpTestingController);
   });
 
@@ -26,9 +26,15 @@ describe('Order', () => {
   });
 
   it('should create an order', () => {
-    const mockOrder = { id: 1, amount: 100, status: 'PENDING' };
+    const mockOrder: OrderResponse = { 
+      id: 1, 
+      userEmail: 'test@test.com', 
+      amount: 100, 
+      orderStatus: 'PENDING', 
+      createdAt: '2022-01-01T00:00:00' 
+    };
     
-    service.createOrder(100).subscribe(order => {
+    service.createOrder({ amount: 100 }).subscribe(order => {
       expect(order).toEqual(mockOrder);
     });
 
@@ -39,7 +45,7 @@ describe('Order', () => {
   });
 
   it('should handle 422 error', () => {
-    service.createOrder(100).subscribe({
+    service.createOrder({ amount: 100 }).subscribe({
       error: error => {
         expect(error.code).toBe('VALIDATION_ERROR');
       }
@@ -50,7 +56,7 @@ describe('Order', () => {
   });
 
   it('should handle 401 error', () => {
-    service.createOrder(100).subscribe({
+    service.createOrder({ amount: 100 }).subscribe({
       error: error => {
         expect(error.code).toBe('UNAUTHORIZED');
       }

@@ -1,0 +1,82 @@
+<div class="page">
+    <div class="container-fluid">
+        <div class="row mb-4 align-items-center text-center">
+            <div class="col">
+                <h1 class="page-title">
+                    <i class="bi bi-receipt"></i> Mis Ordenes
+                </h1>
+                <p class="page-subtitle">Historial y seguimiento en tiempo real</p>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="glass-card">
+            <!-- Loading State -->
+            <div *ngIf="isLoading" class="state-container">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Cargando...</span>
+                </div>
+                <p class="mt-3 text-muted">Sincronizando con el servidor...</p>
+            </div>
+
+            <!-- Error State -->
+            <div *ngIf="error" class="state-container">
+                <div class="alert-box">
+                    <i class="bi bi-exclamation-triangle"></i>
+                    <span>{{ error }}</span>
+                </div>
+            </div>
+
+            <!-- Empty State -->
+            <ng-container *ngIf="!isLoading && !error">
+                <div *ngIf="(orders$ | async)?.length === 0" class="state-container">
+                    <i class="bi bi-inbox empty-icon"></i>
+                    <p class="empty-text">No tienes órdenes registradas todavía.</p>
+                    <a routerLink="/order" class="btn-accent mt-2">Crear mi primera orden</a>
+                </div>
+
+                <!-- Table -->
+                <div class="table-responsive" *ngIf="(orders$ | async) as orders">
+                    <table class="table custom-table" *ngIf="orders.length > 0">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Monto</th>
+                                <th>Estado</th>
+                                <th>Fecha de Creación</th>
+                                <th class="text-end">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let order of orders" class="order-row">
+                                <td class="fw-bold">#{{ order.id }}</td>
+                                <td class="amount-cell">{{ order.amount | currency }}</td>
+                                <td>
+                                    <span class="badge" [ngClass]="getStatusClass(order.orderStatus)">
+                                        {{ order.orderStatus }}
+                                    </span>
+                                </td>
+                                <td class="text-muted">{{ order.createdAt | date:'short' }}</td>
+                                <td class="text-end">
+                                    <button class="btn-icon" title="Ver detalles">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </ng-container>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; margin-top: 8px;">
+            <a routerLink="/order-create" class="btn-back">
+                <i class="bi bi-plus-circle"></i> Nueva Orden
+            </a>
+        </div>
+
+        <div class="polling-indicator mt-3" *ngIf="!isLoading">
+            <span class="dot"></span> Actualizando cada 30 segundos
+        </div>
+    </div>
+</div>

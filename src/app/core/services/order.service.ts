@@ -20,7 +20,7 @@ export interface OrderResponse {
 @Injectable({
   providedIn: 'root',
 })
-export class Order {
+export class OrderService {
   private readonly BASE_URL = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
@@ -28,6 +28,12 @@ export class Order {
   createOrder(payload: OrderRequest): Observable<OrderResponse> {
     return this.http
       .post<OrderResponse>(`${this.BASE_URL}/orders`, payload)
+      .pipe(catchError(this.handleError));
+  }
+
+  getOrders(): Observable<OrderResponse[]> {
+    return this.http
+      .get<OrderResponse[]>(`${this.BASE_URL}/orders`)
       .pipe(catchError(this.handleError));
   }
 

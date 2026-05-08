@@ -28,7 +28,7 @@
         "id": 1,
         "userEmail": "[EMAIL_ADDRESS]",
         "amount": 453.23,
-        "status": "PENDING",
+        "orderStatus": "PENDING",
         "createdAt": "2022-01-01T00:00:00.000Z"
     }
     ```
