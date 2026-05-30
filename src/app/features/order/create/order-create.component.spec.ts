@@ -4,7 +4,7 @@ import { OrderCreateComponent } from './order-create.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting, HttpTestingController } from '@angular/common/http/testing';
-import { Order as OrderService } from '../../../core/services/order.service';
+import { OrderService } from '../../../core/services/order/order.service';
 import { By } from '@angular/platform-browser';
 import { Router, ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
@@ -33,7 +33,7 @@ describe('OrderCreateComponent', () => {
       value: { reload: vi.fn() },
       writable: true
     });
-    
+
     vi.useFakeTimers();
 
     await TestBed.configureTestingModule({
@@ -72,18 +72,18 @@ describe('OrderCreateComponent', () => {
   it('should show success toast on valid submit', async () => {
     component.orderForm.controls['amount'].setValue(100);
     fixture.detectChanges();
-    
+
     component.onSubmit();
 
     const req = httpMock.expectOne('http://localhost:8080/api/orders');
     req.flush({ id: 1 });
-    
+
     fixture.detectChanges();
 
     expect(component.toast.show).toBe(true);
     expect(component.toast.type).toBe('success');
     expect(component.toast.message).toBe('¡Orden creada con éxito!');
-    
+
     const toastElement = fixture.debugElement.query(By.css('.toast-container')).nativeElement;
     expect(toastElement).toBeTruthy();
     expect(toastElement.textContent).toContain('¡Orden creada con éxito!');
@@ -106,13 +106,13 @@ describe('OrderCreateComponent', () => {
 
     const req = httpMock.expectOne('http://localhost:8080/api/orders');
     req.flush({ message: 'User is not active' }, { status: 422, statusText: 'Unprocessable Entity' });
-    
+
     fixture.detectChanges();
 
     expect(component.toast.show).toBe(true);
     expect(component.toast.type).toBe('error');
     expect(component.toast.message).toBe('El usuario no está activo');
-    
+
     const toastElement = fixture.debugElement.query(By.css('.toast-container')).nativeElement;
     expect(toastElement.classList).toContain('toast--error');
   });

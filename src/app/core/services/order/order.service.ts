@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { environment } from '../../../environments/environment';
-import { HandleError } from '../model/h-error/handle-error';
+import { environment } from '../../../../environments/environment';
+import { HandleError } from '../../model/h-error/handle-error';
 
 export interface OrderRequest {
   amount: number;

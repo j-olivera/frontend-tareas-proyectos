@@ -3,7 +3,6 @@ import { TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting, HttpTestingController } from '@angular/common/http/testing';
 import { OrderService, OrderResponse } from './order.service';
-import { of } from 'rxjs';
 
 describe('Order', () => {
   let service: OrderService;
@@ -26,14 +25,14 @@ describe('Order', () => {
   });
 
   it('should create an order', () => {
-    const mockOrder: OrderResponse = { 
-      id: 1, 
-      userEmail: 'test@test.com', 
-      amount: 100, 
-      orderStatus: 'PENDING', 
-      createdAt: '2022-01-01T00:00:00' 
+    const mockOrder: OrderResponse = {
+      id: 1,
+      userEmail: 'test@test.com',
+      amount: 100,
+      orderStatus: 'PENDING',
+      createdAt: '2022-01-01T00:00:00'
     };
-    
+
     service.createOrder({ amount: 100 }).subscribe(order => {
       expect(order).toEqual(mockOrder);
     });

@@ -1,6 +1,6 @@
 import { Component, OnInit, inject, DestroyRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { OrderService, OrderResponse } from '../../../core/services/order.service';
+import { OrderService, OrderResponse } from '../../../core/services/order/order.service';
 import { interval, Observable, of } from 'rxjs';
 import { catchError, startWith, switchMap, tap } from 'rxjs/operators';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -17,7 +17,7 @@ import { RouterModule } from '@angular/router';
 export class OrderViewComponent implements OnInit {
   private readonly orderService = inject(OrderService);
   private readonly destroyRef = inject(DestroyRef);
-  
+
   orders$: Observable<OrderResponse[]> = of([]);
   error: string | null = null;
   isLoading = true;

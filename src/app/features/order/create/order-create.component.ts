@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { OrderService } from '../../../core/services/order.service';
+import { OrderService } from '../../../core/services/order/order.service';
 import { HandleError } from '../../../core/model/h-error/handle-error';
 import { Router, RouterModule } from '@angular/router';
 

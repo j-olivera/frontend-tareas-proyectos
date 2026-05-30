@@ -81,7 +81,7 @@ export class UserLogin implements OnInit {
         localStorage.setItem('userEmail', email);
         this.successMessage = '¡Bienvenido de nuevo!';
         // Redirige a orders luego de 1.5s para que vea el mensaje
-        setTimeout(() => this.router.navigate(['/orders']), 1500);
+        setTimeout(() => this.router.navigate(['/order-create']), 1500);
       },
       error: (err: HandleError) => {
         this.isLoading = false;
