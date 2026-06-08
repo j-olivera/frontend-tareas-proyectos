@@ -6,11 +6,12 @@ import { catchError, startWith, switchMap, tap } from 'rxjs/operators';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { HandleError } from '../../../core/model/h-error/handle-error';
 import { RouterModule } from '@angular/router';
+import { LogoutComponent } from '../../../shared/components/logout/logout.component';
 
 @Component({
   selector: 'app-order-view',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, LogoutComponent],
   templateUrl: './order-view.component.html',
   styleUrl: './order-view.component.css'
 })

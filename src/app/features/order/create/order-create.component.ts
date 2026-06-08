@@ -4,11 +4,12 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { OrderService } from '../../../core/services/order/order.service';
 import { HandleError } from '../../../core/model/h-error/handle-error';
 import { Router, RouterModule } from '@angular/router';
+import { LogoutComponent } from '../../../shared/components/logout/logout.component';
 
 @Component({
   selector: 'app-order-create',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, LogoutComponent],
   templateUrl: './order-create.component.html',
   styleUrls: ['./order-create.component.css']
 })
