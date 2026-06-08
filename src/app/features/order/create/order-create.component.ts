@@ -15,7 +15,7 @@ import { Router, RouterModule } from '@angular/router';
 export class OrderCreateComponent implements OnInit {
   router = inject(Router);
   orderForm!: FormGroup;
-  userEmail: string = '';
+  userEmail: string | null = null;
 
   // Toast state
   toast = {
@@ -31,7 +31,7 @@ export class OrderCreateComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.userEmail = localStorage.getItem('userEmail') || 'usuario@ejemplo.com'; // lo pongo por las dudas, despues agrego el auth-guard y este componente solo debería poder ser accedido por usuarios autenticados
+    this.userEmail = localStorage.getItem('userEmail');
     this.orderForm = this.fb.group({
       amount: ['', [Validators.required, Validators.min(0.01), Validators.pattern('^[0-9]+(\\.[0-9]{1,2})?$')]]
     });
