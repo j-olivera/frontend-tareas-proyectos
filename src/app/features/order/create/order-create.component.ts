@@ -16,6 +16,7 @@ export class OrderCreateComponent implements OnInit {
   router = inject(Router);
   orderForm!: FormGroup;
   userEmail: string = '';
+  isLoading: boolean = false;
 
   // Toast state
   toast = {
@@ -58,8 +59,10 @@ export class OrderCreateComponent implements OnInit {
   onSubmit(): void {
     if (this.orderForm.valid) {
       const amount = this.orderForm.value.amount;
+      this.isLoading = true;
       this.orderService.createOrder({ amount }).subscribe({
         next: () => {
+          this.isLoading = false;
           this.showToast('¡Orden creada con éxito!', 'success');
           this.orderForm.reset();
           setTimeout(() => {
@@ -67,6 +70,7 @@ export class OrderCreateComponent implements OnInit {
           }, 2000);
         },
         error: (error: HandleError) => {
+          this.isLoading = false;
           let msg = 'Ocurrió un error inesperado';
           if (error.code === 'VALIDATION_ERROR') {
             msg = 'El usuario no está activo';
