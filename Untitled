@@ -1,0 +1,4 @@
+POST "/api/login", parameters={}
+2026-06-10T18:16:27.344-03:00 DEBUG 521 --- [nio-8080-exec-9] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.olivera.challenge.infrastructure.controllers.AuthController#login(LoginRequest)
+2026-06-10T18:16:27.345-03:00 DEBUG 521 --- [nio-8080-exec-9] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [com.olivera.challenge.application.dto.request.LoginRequest@327df8d7]
+2026-06-10T18:16:27.346-03:00 DEBUG 521 --- [nio-8080-exec-9] org.hibernate.SQL                        : select ue1_0.
