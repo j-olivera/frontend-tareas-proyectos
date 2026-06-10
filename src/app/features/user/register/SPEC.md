@@ -45,7 +45,7 @@ Method: POST URL: /api/users
 ## 6 - Acceptance Criteria 
 
 - Scenario 1: Successful Registration
-    - Given that the user entered a valid email and a valid password, when clicking "Register", a POST request must be sent to the /api/users endpoint. A message "Account successfully created" should be shown and the user redirected to the orders screen.
+    - Given that the user entered a valid email and a valid password, when clicking "Register", a POST request must be sent to the /api/users endpoint. A message "Account successfully created" should be shown and the user redirected to the login screen.
 
 - Scenario 2: Visual Validations
     - Given that the user entered an invalid email, when removing focus from the input, the input border must turn red and an error message must appear below the input.

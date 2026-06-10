@@ -47,8 +47,9 @@
       </div>
 
       <!-- Submit -->
-      <button type="submit" class="btn-submit" [disabled]="orderForm.invalid">
-        <span>Crear Orden</span>
+      <button type="submit" class="btn-submit" [disabled]="orderForm.invalid || isLoading">
+        <span *ngIf="!isLoading">Crear Orden</span>
+        <span *ngIf="isLoading">Creando Orden...</span>
       </button>
 
       <!-- Enlace a listado -->
