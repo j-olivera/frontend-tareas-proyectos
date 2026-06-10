@@ -1,0 +1,279 @@
+/* order-create.component.css */
+
+/* ─── Tokens ─────────────────────────────────────────────── */
+:host {
+    --color-bg: #0f1117;
+    --color-surface: #1a1d27;
+    --color-border: #2d3145;
+    --color-border-focus: #5b6af0;
+    --color-border-error: #e05c5c;
+    --color-accent: #5b6af0;
+    --color-accent-hover: #4a59e0;
+    --color-text: #e8eaf6;
+    --color-text-muted: #7c82a8;
+    --color-success-bg: #0d2b1e;
+    --color-success-text: #4caf82;
+    --color-error-bg: #2b0d0d;
+    --color-error: #e05c5c;
+    --radius: 10px;
+    --transition: 180ms ease;
+}
+
+/* ─── Layout ─────────────────────────────────────────────── */
+.page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-bg);
+    padding: 24px;
+    position: relative;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    overflow: hidden;
+}
+
+/* ─── User Header (Top Left) ─────────────────────────────── */
+.user-header {
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    z-index: 10;
+}
+
+.btn-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 30px;
+    padding: 8px 16px;
+    color: var(--color-text);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btn-user:hover {
+    border-color: var(--color-accent);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(91, 106, 240, 0.2);
+}
+
+.btn-user i {
+    font-size: 1.1rem;
+    color: var(--color-accent);
+}
+
+/* ─── Toast (Top Right) ──────────────────────────────────── */
+.toast-container {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    z-index: 100;
+    background: rgba(26, 29, 39, 0.9);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(76, 175, 130, 0.3);
+    border-radius: 12px;
+    padding: 16px 20px;
+    min-width: 280px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    animation: slideIn 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+.toast--error {
+    border-color: rgba(224, 92, 92, 0.3);
+}
+
+.toast-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.toast-content i {
+    font-size: 1.25rem;
+    color: var(--color-success-text);
+}
+
+.toast--error .toast-content i {
+    color: var(--color-error);
+}
+
+.toast-content span {
+    color: var(--color-text);
+    font-size: 0.9375rem;
+    font-weight: 500;
+}
+
+.toast-progress {
+    height: 3px;
+    background: var(--color-success-text);
+    width: 100%;
+    border-radius: 2px;
+    animation: progress 4s linear forwards;
+}
+
+.toast--error .toast-progress {
+    background: var(--color-error);
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes progress {
+    from { width: 100%; }
+    to { width: 0%; }
+}
+
+/* ─── Card ───────────────────────────────────────────────── */
+.card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    padding: 40px 36px;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    z-index: 5;
+}
+
+.card__header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.card__logo {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.card__title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin: 0 0 6px;
+    letter-spacing: -0.02em;
+}
+
+.card__subtitle {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin: 0;
+}
+
+/* ─── Form ───────────────────────────────────────────────── */
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* ─── Field ──────────────────────────────────────────────── */
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.field__label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--color-text-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.field__input {
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    color: var(--color-text);
+    font-size: 0.9375rem;
+    padding: 12px 16px;
+    outline: none;
+    transition: all var(--transition);
+}
+
+.field__input:focus {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 4px rgba(91, 106, 240, 0.15);
+}
+
+.field--error .field__input {
+    border-color: var(--color-border-error);
+}
+
+.field__error {
+    font-size: 0.8125rem;
+    color: var(--color-error);
+    font-weight: 500;
+    margin-top: 2px;
+}
+
+/* ─── Submit button ──────────────────────────────────────── */
+.btn-submit {
+    background: var(--color-accent);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius);
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 14px;
+    cursor: pointer;
+    transition: all var(--transition);
+    margin-top: 8px;
+}
+
+.btn-submit:hover:not(:disabled) {
+    background: var(--color-accent-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(91, 106, 240, 0.3);
+}
+
+.btn-submit:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ─── Footer ─────────────────────────────────────────────── */
+.card__footer {
+    margin-top: 16px;
+    text-align: center;
+}
+
+.link-orders {
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all var(--transition);
+    opacity: 0.8;
+}
+
+.link-orders:hover {
+    color: var(--color-accent);
+    opacity: 1;
+    transform: translateX(4px);
+}
+
+.link-orders i {
+    font-size: 0.75rem;
+}

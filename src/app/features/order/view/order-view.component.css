@@ -1,0 +1,227 @@
+/* order-view.component.css */
+
+:host {
+    --color-bg: #0f1117;
+    --color-surface: #1a1d27;
+    --color-border: #2d3145;
+    --color-accent: #5b6af0;
+    --color-text: #e8eaf6;
+    --color-text-muted: #7c82a8;
+    --color-success: #4caf82;
+    --color-warning: #f1c40f;
+    --color-danger: #e05c5c;
+    --color-info: #3498db;
+    --radius: 12px;
+}
+
+.page {
+    min-height: 100vh;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    padding: 40px 5%;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+
+}
+
+.page-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.page-title i {
+    color: var(--color-accent);
+}
+
+.page-subtitle {
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    text-align: center;
+}
+
+/* ─── Buttons ────────────────────────────────────────────── */
+.btn-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--color-accent);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 15px rgba(91, 106, 240, 0.3);
+}
+
+.btn-back:hover {
+    background: #4a59e0;
+    transform: translateY(-2px);
+    color: white;
+}
+
+.btn-accent {
+    background: var(--color-accent);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: var(--radius);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+/* ─── Table Card ─────────────────────────────────────────── */
+.glass-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+.custom-table {
+    margin: 0;
+    color: var(--color-text);
+}
+
+.custom-table thead th {
+    background: transparent;
+    border-bottom: 2px solid var(--color-border);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    padding: 16px;
+}
+
+.custom-table tbody td {
+    padding: 16px;
+    border-bottom: 1px solid var(--color-border);
+    vertical-align: middle;
+}
+
+.order-row {
+    transition: background 0.2s ease;
+}
+
+.order-row:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.amount-cell {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 600;
+    color: var(--color-accent);
+}
+
+/* ─── Badges ─────────────────────────────────────────────── */
+.badge {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.badge-pending {
+    background: rgba(241, 196, 15, 0.15);
+    color: var(--color-warning);
+}
+
+.badge-processing {
+    background: rgba(52, 152, 219, 0.15);
+    color: var(--color-info);
+}
+
+.badge-approved {
+    background: rgba(76, 175, 130, 0.15);
+    color: var(--color-success);
+}
+
+.badge-cancelled {
+    background: rgba(224, 92, 92, 0.15);
+    color: var(--color-danger);
+}
+
+/* ─── States ─────────────────────────────────────────────── */
+.state-container {
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.alert-box {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(224, 92, 92, 0.1);
+    border: 1px solid rgba(224, 92, 92, 0.2);
+    color: var(--color-danger);
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+.empty-icon {
+    font-size: 3rem;
+    color: var(--color-border);
+    margin-bottom: 16px;
+    display: block;
+}
+
+.empty-text {
+    color: var(--color-text-muted);
+}
+
+/* ─── Polling Indicator ─────────────────────────────────── */
+.polling-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    background: var(--color-success);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--color-success);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.95);
+        opacity: 0.7;
+    }
+
+    50% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(0.95);
+        opacity: 0.7;
+    }
+}
+
+.btn-icon {
+    background: transparent;
+    border: none;
+    color: var(--color-text-muted);
+    transition: color 0.2s;
+    font-size: 1.1rem;
+}
+
+.btn-icon:hover {
+    color: var(--color-accent);
+}
