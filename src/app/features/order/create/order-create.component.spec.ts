@@ -6,7 +6,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting, HttpTestingController } from '@angular/common/http/testing';
 import { OrderService } from '../../../core/services/order/order.service';
 import { By } from '@angular/platform-browser';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, provideRouter } from '@angular/router';
 import { of } from 'rxjs';
 
 describe('OrderCreateComponent', () => {
@@ -28,12 +28,6 @@ describe('OrderCreateComponent', () => {
       writable: true
     });
 
-    // Mock window.location.reload
-    Object.defineProperty(window, 'location', {
-      value: { reload: vi.fn() },
-      writable: true
-    });
-
     vi.useFakeTimers();
 
     await TestBed.configureTestingModule({
@@ -41,6 +35,7 @@ describe('OrderCreateComponent', () => {
       providers: [
         provideHttpClient(),
         provideHttpClientTesting(),
+        provideRouter([]),
         OrderService,
         { provide: Router, useValue: { navigate: vi.fn() } },
         { provide: ActivatedRoute, useValue: { params: of({}) } }
@@ -120,7 +115,7 @@ describe('OrderCreateComponent', () => {
   it('should have a link to view orders', () => {
     const link = fixture.debugElement.query(By.css('.link-orders'));
     expect(link).toBeTruthy();
-    expect(link.attributes['routerLink']).toBe('/view-orders');
+    expect(link.attributes['routerLink']).toBe('/order-view');
     expect(link.nativeElement.textContent).toContain('Ver tus ordenes');
   });
 });

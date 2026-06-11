@@ -33,6 +33,7 @@ export interface RegisteredUser { // datos devueltos por el sistema, id, email, 
     providedIn: 'root', // es una instancia global, sirve para no perder la informacion, no se duplique ni se reinicie
 })
 
+
 export class AuthService {
     private readonly BASE_URL = environment.apiUrl;
 
@@ -48,6 +49,15 @@ export class AuthService {
         return this.http
             .post<LoginResponse>(`${this.BASE_URL}/login`, payload)
             .pipe(catchError(this.handleError));
+    }
+
+    isLoggedIn(): boolean {
+        return !!localStorage.getItem('authToken');
+    }
+
+    logout(): void {
+        localStorage.clear();
+        window.location.href = '/login';
     }
 
     private handleError(error: HttpErrorResponse): Observable<never> {

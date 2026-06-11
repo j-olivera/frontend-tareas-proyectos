@@ -4,19 +4,19 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { OrderService } from '../../../core/services/order/order.service';
 import { HandleError } from '../../../core/model/h-error/handle-error';
 import { Router, RouterModule } from '@angular/router';
+import { LogoutComponent } from '../../../shared/components/logout/logout.component';
 
 @Component({
   selector: 'app-order-create',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, LogoutComponent],
   templateUrl: './order-create.component.html',
   styleUrls: ['./order-create.component.css']
 })
 export class OrderCreateComponent implements OnInit {
   router = inject(Router);
   orderForm!: FormGroup;
-  userEmail: string = '';
-  isLoading: boolean = false;
+  userEmail: string | null = null;
 
   // Toast state
   toast = {
@@ -32,7 +32,7 @@ export class OrderCreateComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.userEmail = localStorage.getItem('userEmail') || 'usuario@ejemplo.com'; // lo pongo por las dudas, despues agrego el auth-guard y este componente solo debería poder ser accedido por usuarios autenticados
+    this.userEmail = localStorage.getItem('userEmail');
     this.orderForm = this.fb.group({
       amount: ['', [Validators.required, Validators.min(0.01), Validators.pattern('^[0-9]+(\\.[0-9]{1,2})?$')]]
     });

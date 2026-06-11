@@ -2,15 +2,16 @@ import { Component, OnInit, inject, DestroyRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OrderService, OrderResponse } from '../../../core/services/order/order.service';
 import { interval, Observable, of } from 'rxjs';
-import { catchError, startWith, switchMap, tap } from 'rxjs/operators';
+import { catchError, startWith, switchMap, tap, shareReplay } from 'rxjs/operators';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { HandleError } from '../../../core/model/h-error/handle-error';
 import { RouterModule } from '@angular/router';
+import { LogoutComponent } from '../../../shared/components/logout/logout.component';
 
 @Component({
   selector: 'app-order-view',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, LogoutComponent],
   templateUrl: './order-view.component.html',
   styleUrl: './order-view.component.css'
 })
@@ -35,7 +36,8 @@ export class OrderViewComponent implements OnInit {
         this.error = this.mapErrorMessage(err.code);
         return of([]);
       }),
-      takeUntilDestroyed(this.destroyRef)
+      shareReplay(1), //opt de caching para evitar multiples requests async
+      takeUntilDestroyed(this.destroyRef) //limpia el observable cuando el componente se destruye
     );
   }
 
