@@ -65,6 +65,55 @@ describe('Order', () => {
     req.flush({}, { status: 401, statusText: 'Unauthorized' });
   });
 
+  it('should get orders', () => {
+    const mockOrders: OrderResponse[] = [
+      {
+        id: 1,
+        userEmail: 'test@test.com',
+        amount: 100,
+        orderStatus: 'PENDING',
+        createdAt: '2022-01-01T00:00:00'
+      }
+    ];
+
+    service.getOrders().subscribe(orders => {
+      expect(orders).toEqual(mockOrders);
+    });
+
+    const req = httpMock.expectOne('http://localhost:8080/api/orders');
+    expect(req.request.method).toBe('GET');
+    req.flush(mockOrders);
+  });
+
+  it('should modify an order', () => {
+    const mockOrder: OrderResponse = {
+      id: 1,
+      userEmail: 'test@test.com',
+      amount: 150,
+      orderStatus: 'PENDING',
+      createdAt: '2022-01-01T00:00:00'
+    };
+
+    service.modifyOrder(1, 150).subscribe(order => {
+      expect(order).toEqual(mockOrder);
+    });
+
+    const req = httpMock.expectOne('http://localhost:8080/api/orders/1');
+    expect(req.request.method).toBe('PUT');
+    expect(req.request.body).toEqual({ amount: 150 });
+    req.flush(mockOrder);
+  });
+
+  it('should cancel an order', () => {
+    service.cancelOrder(1).subscribe(response => {
+      expect(response).toBeNull();
+    });
+
+    const req = httpMock.expectOne('http://localhost:8080/api/orders/1');
+    expect(req.request.method).toBe('DELETE');
+    req.flush(null);
+  });
+
   afterEach(() => {
     httpMock.verify();
   });

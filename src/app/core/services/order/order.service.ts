@@ -37,6 +37,18 @@ export class OrderService {
       .pipe(catchError(this.handleError));
   }
 
+  modifyOrder(id: number, amount: number): Observable<OrderResponse> {
+    return this.http
+      .put<OrderResponse>(`${this.BASE_URL}/orders/${id}`, { amount })
+      .pipe(catchError(this.handleError));
+  }
+
+  cancelOrder(id: number): Observable<void> {
+    return this.http
+      .delete<void>(`${this.BASE_URL}/orders/${id}`)
+      .pipe(catchError(this.handleError));
+  }
+
   private handleError(error: HttpErrorResponse): Observable<never> {
     let appError: HandleError = { code: 'UNKNOWN_ERROR' };
 
