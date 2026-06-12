@@ -63,7 +63,7 @@ Ambos endpoints devuelven este objeto:
 - Crea los metodos modifyOrder() (PUT) y cancelOrder() (DELETE) en in /core/services/order.service.ts
 - Crea un modal para la modificación de la orden, en el mismo componente de order-view
 - Crea un modal para la confirmación de ambas funciones, de tipo Standalone, ubicado en /shared/modal/confirmation/
-- Codigo de referencia para el boton que debe estar posicionado en lugar de "Acciones" definido en el cuadro
+- Codigo de referencia en Tailwind para el boton que debe estar posicionado en lugar de "Acciones" definido en el cuadro
 ```html
 <div class="flex items-center bg-secondary-container rounded-lg overflow-hidden border border-white/10 shadow-lg group">
 <!-- Left Half: Edit -->
