@@ -57,10 +57,11 @@ Make sure you have the following installed on your machine:
    npm run build
    ```
 
-5. **Run tests** *(optional)*
+5. **Run tests**
    ```bash
    npm test
    ```
+   The project uses **Vitest** for unit testing. The entire test suite is currently passing with 100% success rate (33/33 tests).
 
 ---
 

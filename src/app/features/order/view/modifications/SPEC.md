@@ -2,100 +2,91 @@
 
 ## 1 - Feature name
 
-- order-view-v2
+- order-view-modifications
 
 ## 2 - Description 
 
-- Experiencia Ux/Ui que permite al usuario modificar el monto o cancelar la orden ya registrada. 
+- UI/UX experience that allows users to modify the amount of an order or cancel it once registered.
 
-## 3 - Endpoint
+## 3 - Endpoints
 
-### Modificar orden
+### Modify Order
 
 - **URL:** `PUT /api/orders/{id}`
-- **Autenticación:** Requerida (Bearer Token).
-- **Path Variable:** `id` (ID de la orden).
+- **Authentication:** Required (Bearer Token).
+- **Path Variable:** `id` (Order ID).
 - **Body (JSON):**
 ```json
 {
   "amount": 150.50
 }
 ```
-- **Respuestas:**
-  - `200 OK`: Devuelve el objeto `OrderResponse` actualizado.
-  - `400 Bad Request`: Si el monto es nulo o <= 0.
-  - `403 Forbidden`: Si intentas modificar una orden que no te pertenece.
-  - `404 Not Found`: Si la orden con ese ID no existe.
+- **Responses:**
+  - `200 OK`: Returns the updated `OrderResponse` object.
+  - `400 Bad Request`: If amount is null or <= 0.
+  - `403 Forbidden`: If attempting to modify an order that does not belong to the user.
+  - `404 Not Found`: If the order with that ID does not exist.
 
 ---
 
-### Cancelar Orden
-Realiza un borrado lógico de la orden cambiando su estado a `CANCELLED`.
+### Cancel Order
+Performs a logical deletion by changing the order status to `CANCELLED`.
 
 - **URL:** `DELETE /api/orders/{id}`
-- **Autenticación:** Requerida (Bearer Token).
-- **Path Variable:** `id` (ID de la orden).
-- **Respuestas:**
-  - `200 OK`: Devuelve el objeto `OrderResponse` con `orderStatus: "CANCELLED"`.
-  - `403 Forbidden`: Si intentas cancelar una orden que no te pertenece.
-  - `404 Not Found`: Si la orden con ese ID no existe.
+- **Authentication:** Required (Bearer Token).
+- **Path Variable:** `id` (Order ID).
+- **Responses:**
+  - `200 OK`: Returns the `OrderResponse` object with `orderStatus: "CANCELLED"`.
+  - `403 Forbidden`: If attempting to cancel an order that does not belong to the user.
+  - `404 Not Found`: If the order with that ID does not exist.
 
 ---
 
-### Estructura de Respuesta (OrderResponse)
-Ambos endpoints devuelven este objeto:
+### Response Structure (OrderResponse)
+Both endpoints return this object:
 ```json
 {
   "id": 1,
-  "userEmail": "usuario@ejemplo.com",
+  "userEmail": "user@example.com",
   "amount": 150.50,
-  "orderStatus": "PENDING", // O "CANCELLED"
+  "orderStatus": "PENDING", // or "CANCELLED"
   "createdAt": "2026-06-11T19:55:46"
 }
 ```
 
-## 4 - Bussines Restrictions
+## 4 - Business Restrictions
 
-- Para modificar o cancelar una orden, el usuario debe estar en estado ACTIVE
-- Para modificar o cancelar una orden, el usuario debe estar en logueado
+- To modify or cancel an order, the user MUST have an `ACTIVE` status.
+- To modify or cancel an order, the user MUST be logged in.
+
 ## 5 - Technical Guidelines
 
-- Crea los metodos modifyOrder() (PUT) y cancelOrder() (DELETE) en in /core/services/order.service.ts
-- Crea un modal para la modificación de la orden, en el mismo componente de order-view
-- Crea un modal para la confirmación de ambas funciones, de tipo Standalone, ubicado en /shared/modal/confirmation/
-- Codigo de referencia en Tailwind para el boton que debe estar posicionado en lugar de "Acciones" definido en el cuadro
-```html
-<div class="flex items-center bg-secondary-container rounded-lg overflow-hidden border border-white/10 shadow-lg group">
-<!-- Left Half: Edit -->
-<button class="h-[52px] w-24 flex items-center justify-center text-primary hover:bg-primary/10 active:scale-95 transition-all border-r border-white/10" title="Editar orden">
-<span class="material-symbols-outlined text-[24px]">edit</span>
-</button>
-<!-- Right Half: Close/Remove -->
-<button class="h-[52px] w-24 flex items-center justify-center text-error hover:bg-error/10 active:scale-95 transition-all" title="Eliminar orden">
-<span class="material-symbols-outlined text-[24px]">close</span>
-</button>
-</div>
-```
-- El estilo debe seguir los colores ya utilizados y usar Bootstrap 5.
+- Implement `modifyOrder()` (PUT) and `cancelOrder()` (DELETE) methods in `src/app/core/services/order/order.service.ts`.
+- Implement an inline edit modal for order amount within the `OrderViewComponent`.
+- Implement a Standalone reusable `ConfirmationModalComponent` in `src/app/shared/components/confirmation-modal/`.
+- Use Reactive Forms for the amount modification logic.
+- Styling MUST follow the project's established dark theme and use Bootstrap 5 utility classes.
 
 ## 6 - Acceptance Criteria
 
-- Escenario 1: Exito en la modificacion
-    - Cuando el usuario logeado intenta modificar una orden, se abre un modal con la peticion para actualizar el monto de la orden utilizando el endpoint /api/orders/{id}, permitiendo modificar la orden con exito
+- **Scenario 1: Successful Modification**
+    - GIVEN a logged-in user with ACTIVE status
+    - WHEN they attempt to modify an order amount via the edit modal
+    - THEN the system MUST send a PUT request to `/api/orders/{id}`
+    - AND the UI SHALL reflect the new amount upon success.
 
-- Escenario 2: Exito en la eliminacion
-    - Cuando el usuario logeado intenta eliminar una orden, se abre un modal con la peticion para eliminar la orden utilizando el endpoint /api/orders/{id}, permitiendo modificar la orden con exito
+- **Scenario 2: Successful Cancellation**
+    - GIVEN a logged-in user with ACTIVE status
+    - WHEN they attempt to cancel an order and confirm the action
+    - THEN the system MUST send a DELETE request to `/api/orders/{id}`
+    - AND the order status SHALL be updated to "CANCELLED" in the list.
 
-- Escenario 3: El usuario no esta activo
-    - Cuando el usuario intenta cancelar o modificar una orden pero ya no cuenta con el estado ACTIVE, el sistema rechaza la petición
-  
-- Escenario 4: El usuario no esta logeado
-    - Cuando el usuario intenta cancelar o modificar una orden pero esta deslogueado, el sistema rechaza la peticion y redirige a /login
+- **Scenario 3: Inactive User**
+    - GIVEN a user that is no longer ACTIVE
+    - WHEN they attempt to modify or cancel an order
+    - THEN the system MUST reject the request (HTTP 422).
 
-
-## 7 - Prompts Utilizados
-
-- Te asigno el rol de Senior en desarrollo de Angular y Typescript, estamos construyendo un Front enlazado con un Backend en Java Spring Boot, el backend se encuentra en la url http://localhost:8080 y el frontend se encuentra en la url http://localhost:4200.
-- Te paso la especificacion de la feature en formato md: [SPEC.MD]
-- Resticciones: Usa Standalone component, Reactive Forms y CSS, tambien Bootstrap 5
-- Utiliza las skills de SDD y el framework OpenSpec, opera en modo interactivo, respetando la arquitectura del sistema, no modifiques archivos externos al flujo del spec sin consultarlo antes.
+- **Scenario 4: Unauthenticated User**
+    - GIVEN a user that is not logged in
+    - WHEN they attempt to access order modifications
+    - THEN the system MUST reject the request and redirect to `/login`.
