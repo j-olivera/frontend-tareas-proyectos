@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { TestBed } from '@angular/core/testing';
 import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideHttpClientTesting, HttpTestingController } from '@angular/common/http/testing';
-import { authInterceptor } from './auth.inteceptor';
+import { authInterceptor } from './auth.interceptor';
 import { AuthService } from './auth.service';
 
 describe('AuthInterceptor', () => {
