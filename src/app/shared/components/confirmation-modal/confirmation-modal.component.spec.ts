@@ -13,7 +13,6 @@ describe('ConfirmationModalComponent', () => {
 
     fixture = TestBed.createComponent(ConfirmationModalComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

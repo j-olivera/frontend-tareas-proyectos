@@ -10,6 +10,15 @@ describe('AuthInterceptor', () => {
   let httpClient: HttpClient;
 
   beforeEach(() => {
+    // Mock simple de localStorage para el test
+    const mockStorage: any = {};
+    vi.spyOn(window.localStorage, 'getItem').mockImplementation((key) => mockStorage[key] || null);
+    vi.spyOn(window.localStorage, 'setItem').mockImplementation((key, value) => mockStorage[key] = value);
+    vi.spyOn(window.localStorage, 'removeItem').mockImplementation((key) => delete mockStorage[key]);
+    vi.spyOn(window.localStorage, 'clear').mockImplementation(() => {
+      Object.keys(mockStorage).forEach(key => delete mockStorage[key]);
+    });
+
     TestBed.configureTestingModule({
       providers: [
         AuthService,
@@ -26,6 +35,7 @@ describe('AuthInterceptor', () => {
   afterEach(() => {
     httpMock.verify();
     localStorage.clear();
+    vi.restoreAllMocks();
   });
 
   it('should add an Authorization header when token is present', () => {
