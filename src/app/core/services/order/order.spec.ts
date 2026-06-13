@@ -3,6 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting, HttpTestingController } from '@angular/common/http/testing';
 import { OrderService, OrderResponse } from './order.service';
+import { environment } from '../../../../environments/environment';
 
 describe('Order', () => {
   let service: OrderService;
@@ -37,7 +38,7 @@ describe('Order', () => {
       expect(order).toEqual(mockOrder);
     });
 
-    const req = httpMock.expectOne('http://localhost:8080/api/orders');
+    const req = httpMock.expectOne(`${environment.apiUrl}/orders`);
     expect(req.request.method).toBe('POST');
     expect(req.request.body).toEqual({ amount: 100 });
     req.flush(mockOrder);
@@ -50,7 +51,7 @@ describe('Order', () => {
       }
     });
 
-    const req = httpMock.expectOne('http://localhost:8080/api/orders');
+    const req = httpMock.expectOne(`${environment.apiUrl}/orders`);
     req.flush({ message: 'User is not active' }, { status: 422, statusText: 'Unprocessable Entity' });
   });
 
@@ -61,7 +62,7 @@ describe('Order', () => {
       }
     });
 
-    const req = httpMock.expectOne('http://localhost:8080/api/orders');
+    const req = httpMock.expectOne(`${environment.apiUrl}/orders`);
     req.flush({}, { status: 401, statusText: 'Unauthorized' });
   });
 
@@ -80,7 +81,7 @@ describe('Order', () => {
       expect(orders).toEqual(mockOrders);
     });
 
-    const req = httpMock.expectOne('http://localhost:8080/api/orders');
+    const req = httpMock.expectOne(`${environment.apiUrl}/orders`);
     expect(req.request.method).toBe('GET');
     req.flush(mockOrders);
   });
@@ -98,7 +99,7 @@ describe('Order', () => {
       expect(order).toEqual(mockOrder);
     });
 
-    const req = httpMock.expectOne('http://localhost:8080/api/orders/1');
+    const req = httpMock.expectOne(`${environment.apiUrl}/orders/1`);
     expect(req.request.method).toBe('PUT');
     expect(req.request.body).toEqual({ amount: 150 });
     req.flush(mockOrder);
@@ -109,7 +110,7 @@ describe('Order', () => {
       expect(response).toBeNull();
     });
 
-    const req = httpMock.expectOne('http://localhost:8080/api/orders/1');
+    const req = httpMock.expectOne(`${environment.apiUrl}/orders/1`);
     expect(req.request.method).toBe('DELETE');
     req.flush(null);
   });

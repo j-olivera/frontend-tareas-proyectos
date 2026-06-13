@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { TestBed } from '@angular/core/testing';
 import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideHttpClientTesting, HttpTestingController } from '@angular/common/http/testing';
@@ -10,13 +10,16 @@ describe('AuthInterceptor', () => {
   let httpClient: HttpClient;
 
   beforeEach(() => {
-    // Mock simple de localStorage para el test
-    const mockStorage: any = {};
-    vi.spyOn(window.localStorage, 'getItem').mockImplementation((key) => mockStorage[key] || null);
-    vi.spyOn(window.localStorage, 'setItem').mockImplementation((key, value) => mockStorage[key] = value);
-    vi.spyOn(window.localStorage, 'removeItem').mockImplementation((key) => delete mockStorage[key]);
-    vi.spyOn(window.localStorage, 'clear').mockImplementation(() => {
-      Object.keys(mockStorage).forEach(key => delete mockStorage[key]);
+    // Mock robusto de localStorage para Vitest/JSDOM
+    const mockStorage = new Map<string, string>();
+    
+    vi.stubGlobal('localStorage', {
+      getItem: vi.fn((key: string) => mockStorage.get(key) || null),
+      setItem: vi.fn((key: string, value: string) => mockStorage.set(key, value)),
+      removeItem: vi.fn((key: string) => mockStorage.delete(key)),
+      clear: vi.fn(() => mockStorage.clear()),
+      length: 0,
+      key: vi.fn((index: number) => Array.from(mockStorage.keys())[index] || null),
     });
 
     TestBed.configureTestingModule({
@@ -34,7 +37,7 @@ describe('AuthInterceptor', () => {
 
   afterEach(() => {
     httpMock.verify();
-    localStorage.clear();
+    vi.unstubAllGlobals();
     vi.restoreAllMocks();
   });
 

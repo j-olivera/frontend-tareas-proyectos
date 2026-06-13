@@ -71,7 +71,7 @@ describe('OrderCreateComponent', () => {
 
     component.onSubmit();
 
-    const req = httpMock.expectOne('http://localhost:8080/api/orders');
+    const req = httpMock.expectOne(`${environment.apiUrl}/orders`);
     req.flush({ id: 1 });
 
     fixture.detectChanges();
