@@ -8,6 +8,7 @@ import { OrderService } from '../../../core/services/order/order.service';
 import { By } from '@angular/platform-browser';
 import { Router, ActivatedRoute, provideRouter } from '@angular/router';
 import { of } from 'rxjs';
+import { environment } from '../../../../environments/environment';
 
 describe('OrderCreateComponent', () => {
   let component: OrderCreateComponent;
@@ -99,7 +100,7 @@ describe('OrderCreateComponent', () => {
 
     component.onSubmit();
 
-    const req = httpMock.expectOne('http://localhost:8080/api/orders');
+    const req = httpMock.expectOne(`${environment.apiUrl}/orders`);
     req.flush({ message: 'User is not active' }, { status: 422, statusText: 'Unprocessable Entity' });
 
     fixture.detectChanges();

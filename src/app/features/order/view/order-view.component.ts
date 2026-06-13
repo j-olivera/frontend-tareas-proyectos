@@ -132,6 +132,7 @@ export class OrderViewComponent implements OnInit {
       error: () => {
         this.isSubmitting = false;
         // En una app real mostraríamos un toast o similar
+        this.modalError = 'Error al cancelar la orden. Por favor intenta de nuevo.';
         this.closeModals();
       }
     });
