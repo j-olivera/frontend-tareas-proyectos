@@ -17,6 +17,7 @@ export class OrderCreateComponent implements OnInit {
   router = inject(Router);
   orderForm!: FormGroup;
   userEmail: string | null = null;
+  isLoading = false;
 
   // Toast state
   toast = {

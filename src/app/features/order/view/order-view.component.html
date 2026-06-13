@@ -44,9 +44,14 @@
                                 </td>
                                 <td class="text-muted">{{ order.createdAt | date:'short' }}</td>
                                 <td class="text-end">
-                                    <button class="btn-icon" title="Ver detalles">
-                                        <i class="bi bi-eye"></i>
-                                    </button>
+                                    <div class="btn-group">
+                                        <button class="btn-icon" title="Editar monto" (click)="onEdit(order)" [disabled]="order.orderStatus === 'CANCELLED'">
+                                            <i class="bi bi-pencil"></i>
+                                        </button>
+                                        <button class="btn-icon text-danger" title="Cancelar orden" (click)="onCancel(order)" [disabled]="order.orderStatus === 'CANCELLED'">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </div>
                                 </td>
                             </tr>
                         </tbody>
@@ -84,6 +89,52 @@
             <span class="dot"></span> Actualizando cada 30 segundos
         </div>
     </div>
+
+    <!-- Edit Modal -->
+    <div class="modal fade show" tabindex="-1" style="display: block; background-color: rgba(0,0,0,0.5);" *ngIf="showEditModal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-dark text-light border-secondary shadow-lg">
+                <div class="modal-header border-secondary">
+                    <h5 class="modal-title">Editar Orden #{{ selectedOrder?.id }}</h5>
+                    <button type="button" class="btn-close btn-close-white" (click)="closeModals()"></button>
+                </div>
+                <div class="modal-body py-4">
+                    <form [formGroup]="editForm" (ngSubmit)="confirmEdit()">
+                        <div class="mb-3">
+                            <label for="amount" class="form-label">Nuevo Monto</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-secondary border-secondary text-light">$</span>
+                                <input type="number" id="amount" class="form-control bg-dark text-light border-secondary" 
+                                       formControlName="amount" placeholder="0.00" step="0.01">
+                            </div>
+                            <div *ngIf="editForm.get('amount')?.invalid && editForm.get('amount')?.touched" class="text-danger mt-1 small">
+                                El monto debe ser mayor a 0.
+                            </div>
+                        </div>
+                        <div *ngIf="modalError" class="alert alert-danger py-2 small">
+                            {{ modalError }}
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer border-secondary">
+                    <button type="button" class="btn btn-outline-light px-4" (click)="closeModals()" [disabled]="isSubmitting">Cancelar</button>
+                    <button type="button" class="btn btn-accent px-4" (click)="confirmEdit()" [disabled]="editForm.invalid || isSubmitting">
+                        <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm me-1"></span>
+                        Guardar Cambios
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal for Cancellation -->
+    <app-confirmation-modal 
+        *ngIf="showCancelModal"
+        title="Cancelar Orden"
+        message="¿Estás seguro de que deseas cancelar esta orden? Esta acción no se puede deshacer."
+        (confirm)="confirmCancel()"
+        (cancel)="closeModals()">
+    </app-confirmation-modal>
 
     <app-logout></app-logout>
 </div>

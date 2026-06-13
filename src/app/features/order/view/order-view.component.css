@@ -75,6 +75,11 @@
     transition: all 0.2s ease;
 }
 
+.btn-accent:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
 /* ─── Table Card ─────────────────────────────────────────── */
 .glass-card {
     background: var(--color-surface);
@@ -218,10 +223,48 @@
     background: transparent;
     border: none;
     color: var(--color-text-muted);
-    transition: color 0.2s;
+    transition: all 0.2s ease;
     font-size: 1.1rem;
+    padding: 4px 8px;
+    border-radius: 6px;
 }
 
-.btn-icon:hover {
+.btn-icon:hover:not(:disabled) {
     color: var(--color-accent);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.btn-icon.text-danger:hover:not(:disabled) {
+    color: var(--color-danger) !important;
+}
+
+.btn-icon:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.btn-group {
+    gap: 4px;
+}
+
+/* ─── Modal Tweaks ──────────────────────────────────────── */
+.modal-content {
+    border-radius: 16px;
+}
+
+.input-group-text {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.form-control {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.form-control:focus {
+    background-color: #1a1d27;
+    color: white;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 0.25rem rgba(91, 106, 240, 0.25);
 }
