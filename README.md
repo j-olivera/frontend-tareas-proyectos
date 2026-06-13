@@ -1,68 +1,88 @@
-# Frontend - Tasks and Projects
+# Frontend - Order Manager
 
-This project is part of an integrative work for a subject at UNdeC, implementing Angular and the SPEC methodology.
+This project is a task and project management application developed as part of an integrative work for the Universidad Nacional de Chilecito (UNdeC). It focuses on implementing a robust frontend using Angular and following the Spec-Driven Development (SDD) methodology.
 
-## 🔗 Backend Repository
+## Project Context
 
-The backend for this project is available at:
-[https://github.com/j-olivera/Final-Integrador](https://github.com/j-olivera/Final-Integrador)
+The application serves as a centralized order management system, allowing users to register, log in, and manage various tasks and orders efficiently. It emphasizes clean architecture, rigorous documentation, and high quality standards through the use of specifications.
 
----
+## Architecture and Structure
 
-## 🛠️ Technologies Used
+The project follows a modular organization to ensure maintainability and scalability:
 
-| Technology | Version |
-|------------|---------|
-| [Angular](https://angular.io/) | ^21.2.0 |
-| [TypeScript](https://www.typescriptlang.org/) | ~5.9.2 |
-| [RxJS](https://rxjs.dev/) | ~7.8.0 |
-| [Angular Router](https://angular.io/guide/router) | ^21.2.0 |
-| [Angular Forms](https://angular.io/guide/forms-overview) | ^21.2.0 |
-| [Vitest](https://vitest.dev/) | ^4.0.8 |
-| [Prettier](https://prettier.io/) | ^3.8.1 |
-| Node Package Manager (npm) | 11.12.1 |
+- **Core**: Contains singleton services, global models, and essential components such as authentication guards and interceptors.
+- **Features**: Organized by business domain (e.g., Order, User). Each feature includes its own components, logic, and localized specifications.
+- **Shared**: Includes reusable components and utilities shared across different feature modules.
+- **OpenSpec**: The `.openspec` directory contains high-level specifications and methodology artifacts that drive the development lifecycle.
 
----
+## Methodology: Spec-Driven Development (SDD)
 
-## 🚀 Installation Instructions
+Development is guided by formal specifications (SPEC.md files). Each component and feature is defined by requirements and scenarios before implementation, ensuring:
+
+- Clear functional boundaries and unambiguous requirements.
+- Strong traceability between business rules and technical implementation.
+- A focus on acceptance criteria through structured scenarios (GIVEN/WHEN/THEN).
+
+## Technologies Used
+
+| Technology | Version | Description |
+|------------|---------|-------------|
+| Angular | ^21.2.0 | Core Framework |
+| TypeScript | ~5.9.2 | Programming Language |
+| RxJS | ~7.8.0 | Reactive Programming |
+| Vitest | ^4.0.8 | Unit Testing Framework |
+| Analog | ^2.6.1 | Vite-based Angular Plugin |
+| Prettier | ^3.8.1 | Code Formatting |
+| Node.js | ^18.0.0+ | Runtime Environment |
+
+## Installation and Setup
 
 ### Prerequisites
 
-Make sure you have the following installed on your machine:
-- [Node.js](https://nodejs.org/) (v18 or higher recommended)
-- [npm](https://www.npmjs.com/) (v11 or higher)
-- [Angular CLI](https://angular.io/cli)
+Ensure you have the following installed:
+- Node.js (v18 or higher recommended)
+- npm (v11 or higher)
+- Angular CLI
 
-### Steps
+### Installation Steps
 
-1. **Clone the repository**
+1. Clone the repository:
    ```bash
    git clone <repository-url>
    cd frontend-tareas-proyectos
    ```
 
-2. **Install dependencies**
+2. Install dependencies:
    ```bash
    npm install
    ```
 
-3. **Run the development server**
+3. Start the development server:
    ```bash
    npm start
    ```
-   The application will be available at `http://localhost:4200/`.
+   The application will be accessible at http://localhost:4200/.
 
-4. **Build for production** *(optional)*
-   ```bash
-   npm run build
-   ```
+## Testing
 
-5. **Run tests**
-   ```bash
-   npm test
-   ```
-   The project uses **Vitest** for unit testing. The entire test suite is currently passing with 100% success rate (33/33 tests).
+The project utilizes Vitest for unit testing, providing a fast and reliable test execution environment integrated with the Vite ecosystem.
 
----
+To run the test suite:
+```bash
+npm test
+```
 
-> **Note:** Make sure the backend server is running before starting the frontend. Refer to the [backend repository](https://github.com/j-olivera/Final-Integrador) for setup instructions.
+## Production Build
+
+To generate a production-ready build:
+```bash
+npm run build
+```
+The compiled artifacts will be located in the `dist/` directory.
+
+## Backend Integration
+
+This frontend is designed to work with a dedicated backend built with Java Spring Boot.
+
+- **Backend Repository**: [https://github.com/j-olivera/Final-Integrador](https://github.com/j-olivera/Final-Integrador)
+- **Default API URL**: http://localhost:8080
